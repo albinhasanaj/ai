@@ -216,6 +216,7 @@ const Home = () => {
   const formatPredictionsData = (data) => {
     // Convert the data object to an array and sort by date descending
     const sortedData = Object.entries(data)
+      // @ts-ignore
       .map(([date, prediction]) => ({ date, ...prediction }))
       .sort((a, b) => new Date(b.specific_date).getTime() - new Date(a.specific_date).getTime());
 
@@ -511,6 +512,7 @@ const Home = () => {
         </div>
         {predictResult && (
           <div className="mt-6">
+            {/* @ts-ignore */}
             {predictResult.return_val === "Error" ? (
               <motion.div
                 variants={itemVariants}

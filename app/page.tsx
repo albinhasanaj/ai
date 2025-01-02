@@ -64,7 +64,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPredictions = async () => {
       try {
-        for (let i = 7; i < 14; i++) {
+        for (let i = 8; i < 15; i++) {
           const today = new Date();
           const date = new Date(today.getTime() - i * 24 * 60 * 60 * 1000);
           const formattedDate = date.toISOString().split("T")[0];
@@ -469,13 +469,13 @@ const Home = () => {
           <p className="text-gray-700">
             <span className="font-medium">Estimated Profit:</span>{" "}
             {calculatedProfit !== null
-              ? `$${calculatedProfit.toFixed(2)}`
+              ? `${calculatedProfit.toFixed(2)}kr`
               : "N/A"}
           </p>
           <p className="text-gray-700">
             <span className="font-medium">Estimated Monthly Profit:</span>{" "}
             {calculatedMonthlyProfit !== null
-              ? `$${calculatedMonthlyProfit.toFixed(2)}`
+              ? `${calculatedMonthlyProfit.toFixed(2)}kr`
               : "N/A"}
           </p>
         </div>

@@ -166,7 +166,7 @@ const Home = () => {
     const monthlyGrowthMultiplier = weeklyGrowthMultiplier ** 4;
 
     const potentialProfit = amount * leverage * (averagePercentage / 100);
-    const monthlyProfit = amount * leverage * monthlyGrowthMultiplier - amount;
+    const monthlyProfit = amount * leverage * monthlyGrowthMultiplier - amount * leverage;
 
     setCalculatedProfit(potentialProfit);
     setCalculatedMonthlyProfit(monthlyProfit);

@@ -35,7 +35,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPredictions = async () => {
       try {
-        for (let i = 7; i < 14; i++) {
+        for (let i = 7; i < 21; i++) {
           const today = new Date();
           const date = new Date(today.getTime() - i * 24 * 60 * 60 * 1000);
           const formattedDate = date.toISOString().split("T")[0];
@@ -43,16 +43,22 @@ const Home = () => {
             `${API_BASE_URL}/predict/${formattedDate}`
           );
 
-          // Extract numeric percentage, make absolute
-          let percentage = response.data.pct_change;
-          percentage = percentage.replace("%", "");
-          percentage = Math.abs(parseFloat(percentage));
+          const prediction = response.data;
+          // console.log("Prediction:", prediction.return_val);
+          // if neutral, skip
+          if (prediction.return_val !== "Neutral") {
+            // Extract numeric percentage, make absolute
+            let percentage = response.data.pct_change;
+            percentage = percentage.replace("%", "");
+            percentage = Math.abs(parseFloat(percentage));
 
-          setAllPercentages((prev) => {
-            const updated = [...prev, percentage];
-            console.log("Updated allPercentages after adding:", updated);
-            return updated;
-          });
+            setAllPercentages((prev) => {
+              const updated = [...prev, percentage];
+              // console.log("Updated allPercentages after adding:", updated);
+              return updated;
+            });
+          }
+
         }
       } catch (err) {
         console.error("Error fetching predictions:", err);
@@ -69,7 +75,7 @@ const Home = () => {
       const total = allPercentages.reduce((sum, val) => sum + val, 0);
       const average = total / allPercentages.length;
       setAveragePercentage(average);
-      console.log("Calculated average percentage:", average);
+      // console.log("Calculated average percentage:", average);
     }
   }, [allPercentages]);
 

@@ -399,7 +399,7 @@ const Home = () => {
       </h1>
 
       {/* Latest Predictions Section */}
-      <motion.div
+      {/* <motion.div
         className="mb-12"
         variants={containerVariants}
         initial="hidden"
@@ -418,7 +418,7 @@ const Home = () => {
         ) : (
           <p className="text-gray-600">No predictions available.</p>
         )}
-      </motion.div>
+      </motion.div> */}
 
       {/* Profit Calculator */}
       <motion.div

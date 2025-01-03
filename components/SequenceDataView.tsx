@@ -104,25 +104,41 @@ const SequenceDataView: React.FC<SequenceDataViewProps> = ({ sequence }) => {
             }
         });
     };
+    const formatDateUTC = (date: Date): string => {
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
 
     const prepareChartData = (data: CandleData[]) => {
-        const preparedData = data.map((candle) => ({
-            date: new Date(candle.timestamp).toLocaleString(),
-            open: candle.open,
-            high: candle.high,
-            low: candle.low,
-            close: candle.close, // Ensure the key is lowercase 'close'
-            volume: candle.volume,
-            // Add selected indicators
-            ...selectedIndicators.reduce((acc, indicator) => {
+        const preparedData = data.map((candle) => {
+            const date = new Date(candle.timestamp);
+            const formattedDate = formatDateUTC(date);
 
-                acc[indicator.name] = candle[indicator.key] as number;
-                return acc;
-            }, {} as { [key: string]: number }),
-        }));
+            return {
+                date: formattedDate, // "YYYY-MM-DD HH:mm"
+                open: candle.open,
+                high: candle.high,
+                low: candle.low,
+                close: candle.close, // Ensure the key is lowercase 'close'
+                volume: candle.volume,
+
+                // Add selected indicators
+                ...selectedIndicators.reduce((acc, indicator) => {
+                    acc[indicator.name] = candle[indicator.key] as number;
+                    return acc;
+                }, {} as { [key: string]: number }),
+            };
+        });
+
         console.log('Prepared Chart Data:', preparedData); // For debugging
         return preparedData;
     };
+
 
     // Function to calculate domain for a given data key with padding
     const calculateDomain = (data: CandleData[], key: keyof CandleData): [number, number] => {

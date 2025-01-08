@@ -19,7 +19,8 @@ export const fetchPredictionByDate = async (date: string): Promise<Prediction> =
 };
 
 // **New Function: Fetch Latest Data**
-export const fetchLatestData = async (): Promise<string> => {
-    const response = await axios.get(`${API_BASE_URL}/latest_data`);
+export const fetchLatestData = async (): Promise<{ status: string }> => {
+    const response = await axios.get<{ status: string }>(`${API_BASE_URL}/latest_data`);
     return response.data;
 };
+

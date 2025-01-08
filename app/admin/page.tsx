@@ -18,7 +18,7 @@ const Admin: React.FC = () => {
         try {
             const response = await fetchLatestData();
             // console.log("Response:", response);
-            if (response == "200") {
+            if (response.status == "200") {
                 setNotification({ message: 'Latest data fetched successfully!', type: 'success' });
             } else {
                 setNotification({ message: `Unexpected response status: ${response}`, type: 'error' });
